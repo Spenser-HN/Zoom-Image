@@ -24,7 +24,7 @@ class Zoom_Controller {
 
     /**
      * 
-     * @param {HTMLElement | null} ImageElement 
+     * @param {HTMLImageElement | null} ImageElement 
      * @param {HTMLElement | null} CanvasParentElement 
      * @param {number} CanvasElementHeight
      * @param {number} CanvasElementWidth
@@ -52,7 +52,21 @@ class Zoom_Controller {
     }
 
 
-    ChangeImage() { }
+    /**
+     *@param {HTMLImageElement | null} Image
+     *@returns {void} 
+     */
+
+    ChangeImage(Image) {
+        this.Remove(false);
+        this.ImageElement = Image;
+        this.Zoom = 0;
+        this.CreateCanvasElement()
+    }
+
+    /**
+     *@returns {void} 
+     */
 
     ChangeCanvasElementDimensions(width, height) {
         this.CanvasElementHeight = height;
@@ -61,10 +75,18 @@ class Zoom_Controller {
         console.warn("Canvas Element dimentions has been changed, zoom may not be correct")
     }
 
+    /**
+     *@returns {void} 
+     */
+
     ChangeCanvasImageDimensions(width, height) {
         this.Canvasheight = height;
         this.Canvaswidth = width;
     }
+
+    /**
+     *@returns {void} 
+     */
 
     ZoomIn() {
         if (this.Zoom < 10) {
@@ -74,6 +96,10 @@ class Zoom_Controller {
         }
     }
 
+    /**
+     *@returns {void} 
+     */
+
     ZoomOut() {
         if (this.Zoom > 0) {
             this.Zoom = this.Zoom - 1;
@@ -82,9 +108,17 @@ class Zoom_Controller {
         }
     }
 
+    /**
+     *@returns {void} 
+     */
+
     Clear(CTX) {
         CTX.clearRect(0, 0, this.Canvaswidth, this.Canvasheight);
     }
+
+    /**
+     *@returns {void} 
+     */
 
     CreateCanvasElement() {
         let Canvas = document.createElement("canvas");
@@ -108,35 +142,49 @@ class Zoom_Controller {
     /**
      * 
      * @param {boolean} Definitive If the node will never be rendered again 
+     * @returns {void}
      */
-    Remove(Definitive) {
-        this.GetCanvasElement().remove();
 
-        if (Definitive) {
-            this.ImageElement.removeEventListener("mousemove", this.MouseMoveHandler);
+    Remove(Definitive) {
+
+        if (this.CanvasIsActive === true) {
+            this.GetCanvasElement().remove();
+
+            if (Definitive) {
+                this.ImageElement.removeEventListener("mousemove", this.MouseMoveHandler);
+            }
+
+            this.ImageElement.removeEventListener("mouseout", this.MouseOutHandler);
         }
 
-        this.ImageElement.removeEventListener("mouseout", this.MouseOutHandler);
     }
 
     /**
      * 
      * @returns {HTMLElement | null}
      */
+
     GetCanvasElement() {
         return document.getElementById(this.CanvasId)
     }
 
+    /**
+     * @returns {void}
+     */
+
     RenderComponentAgain() {
-        if (this.CanvasIsActive === true) {
-            this.CreateCanvasElement();
-        }
+        this.Remove(false);
         this.CreateCanvasElement()
     }
 
+    /**
+     * 
+     * @param {MouseEvent} e 
+     * @returns {void}
+     */
+
     MouseMoveHandler(e) {
 
-        console.log(this.Canvaswidth, this.Canvasheight, this.Zoom)
         if (this.CanvasIsActive === false) {
             this.CreateCanvasElement();
             this.CanvasIsActive = true;
@@ -147,9 +195,10 @@ class Zoom_Controller {
         let CTX = Canvas.getContext("2d");
 
         //This data is done by the porcent of the movement
+
         let Movement = {
-            X: (e.layerX * 100) / 600,
-            Y: (e.layerY * 100) / 300
+            X: (e.layerX * 100) / e.target.width,
+            Y: (e.layerY * 100) / e.target.height
         }
 
         let ActualPosition = {
@@ -201,11 +250,21 @@ class Zoom_Controller {
 
     }
 
+    /**
+    * 
+    * @param {MouseEvent} e 
+    * @returns {void}
+    */
 
     MouseOutHandler() {
         this.Remove(false);
         this.CanvasIsActive = false;
     }
+
+    /**
+     * @returns {void}
+     * 
+     */
 
     Init() {
 
