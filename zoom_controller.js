@@ -47,7 +47,7 @@ class Zoom_Controller {
         this.IncreaseZoomButton = IncreaseZoomButton;
         this.DecreaseZoomButton = DecreaseZoomButton;
         this.CanvasIsActive = false;
-        this.Zoom = 0;
+        this.Zoom = 1;
         this.Styles = Styles;
     }
 
@@ -91,8 +91,8 @@ class Zoom_Controller {
     ZoomIn() {
         if (this.Zoom < 10) {
             this.Zoom = this.Zoom + 1;
-            this.Canvasheight += (this.Canvasheight * (1 / 10))
-            this.Canvaswidth += (this.Canvaswidth * (1 / 10))
+            this.Canvasheight += 200;
+            this.Canvaswidth += 100;
         }
     }
 
@@ -101,10 +101,10 @@ class Zoom_Controller {
      */
 
     ZoomOut() {
-        if (this.Zoom > 0) {
+        if (this.Zoom > 1) {
             this.Zoom = this.Zoom - 1;
-            this.Canvasheight = (this.Canvasheight - (this.Canvasheight * (1 / 10)))
-            this.Canvaswidth = (this.Canvaswidth - (this.Canvaswidth * (1 / 10)))
+            this.Canvasheight -= 200;
+            this.Canvaswidth -= 100;
         }
     }
 
@@ -194,6 +194,8 @@ class Zoom_Controller {
         let Canvas = this.GetCanvasElement();
         let CTX = Canvas.getContext("2d");
 
+        this.Clear(CTX);
+
         //This data is done by the porcent of the movement
 
         let Movement = {
@@ -201,50 +203,15 @@ class Zoom_Controller {
             Y: (e.layerY * 100) / e.target.height
         }
 
-        let ActualPosition = {
-            X: -(this.Canvaswidth * (Movement.X / 100)),
-            Y: -(this.Canvasheight * (Movement.Y / 100)),
+        let X_DIVISOR = (this.Canvaswidth - this.CanvasElementWidth);
+        let Y_DIVISOR = (this.Canvasheight - this.CanvasElementHeight)
+
+        let Coordinates = {
+            X: -(Movement.X * (X_DIVISOR / 100)),
+            Y: -(Movement.Y * (Y_DIVISOR / 100))
         }
 
-        this.Clear(CTX)
-
-        switch (this.Zoom) {
-            case 3:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 5), ActualPosition.Y + (this.Canvasheight / 5), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            case 4:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 6), ActualPosition.Y + (this.Canvasheight / 6), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            case 5:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 8), ActualPosition.Y + (this.Canvasheight / 8), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            case 6:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 12), ActualPosition.Y + (this.Canvasheight / 12), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            case 7:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 16), ActualPosition.Y + (this.CanvasElementHeight / 16), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            case 8:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 17), ActualPosition.Y + (this.Canvasheight / 17), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            case 9:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 18), ActualPosition.Y + (this.Canvasheight / 18), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            case 10:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 20), ActualPosition.Y + (this.Canvasheight / 20), this.Canvaswidth, this.Canvasheight)
-                break;
-
-            default:
-                CTX.drawImage(this.ImageElement, ActualPosition.X + (this.Canvaswidth / 4), ActualPosition.Y + (this.Canvasheight / 4), this.Canvaswidth, this.Canvasheight)
-                break;
-        }
+        CTX.drawImage(this.ImageElement, Coordinates.X, Coordinates.Y, this.Canvaswidth, this.Canvasheight)
 
         return
 
@@ -262,6 +229,14 @@ class Zoom_Controller {
     }
 
     /**
+     * @returns {boolean}
+     */
+
+    IsTouchScreen() {
+        return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+    }
+
+    /**
      * @returns {void}
      * 
      */
@@ -269,21 +244,28 @@ class Zoom_Controller {
     Init() {
 
 
+        /* ? ------- Touch Screens -------- */
+        if (this.IsTouchScreen() === true) {
+
+
+            //Mouse move will be handled latter
+            /** 
+        
+            this.ImageElement.addEventListener("touchmove", (e) => {
+                e.preventDefault();
+            });
+        
+            **/
+            return
+
+        }
+
+        /* ?-------- Not toucheable screens ------- */
         //Controlling Hovers
         this.ImageElement.addEventListener("mousemove", (e) => this.MouseMoveHandler(e));
 
         //Controllig MouseLeave
         this.ImageElement.addEventListener("mouseout", () => this.MouseOutHandler());
-
-
-        //Mouse move will be handled latter
-        /** 
-    
-        this.ImageElement.addEventListener("touchmove", (e) => {
-            e.preventDefault();
-        });
-    
-        **/
 
         //Zoom In
         this.IncreaseZoomButton.addEventListener("click", () => this.ZoomIn());
