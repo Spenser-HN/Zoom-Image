@@ -44,7 +44,7 @@ ZoomView.Init();
  renderizado del componente <canvas>.
  
  ### Archivo de la libreria:
-- [zoom_controller.js](./zoom_controller.js)
+ [zoom_controller.js](./zoom_controller.js)
 
 ## _Desadorrado por_
 - @Spenser-HN
