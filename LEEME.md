@@ -42,6 +42,9 @@ ZoomView.Init();
 
 *Importante*: Recuerda usar una posicion de css para el elemento <canvas>, ya puede ser "position:fixed" o "position:relative" para no tener problemas con el
  renderizado del componente <canvas>.
+ 
+ ### Archivo de la libreria:
+- [zoom_controller.js](./zoom_controller.js)
 
 ## _Desadorrado por_
 - @Spenser-HN
