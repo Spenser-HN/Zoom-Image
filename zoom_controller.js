@@ -20,7 +20,7 @@
    ZoomView.Init();
 */
 
-class Zoom_Controller {
+class Zoom_Image {
 
     /**
      * 
@@ -34,9 +34,10 @@ class Zoom_Controller {
      * @param {HTMLElement | null} IncreaseZoomButton 
      * @param {HTMLElement | null} DecreaseZoomButton 
      * @param {Array<string> | null } Styles Css class list
+     * @param {number} MaxZoom 1 to 30;
      */
 
-    constructor(ImageElement, CanvasParentElement, CanvasElementHeight, CanvasElementWidth, CanvasImageHeight, CanvasImageWidth, CanvasId, IncreaseZoomButton, DecreaseZoomButton, ...Styles) {
+    constructor(ImageElement, MaxZoom, CanvasParentElement, CanvasElementHeight, CanvasElementWidth, CanvasImageHeight, CanvasImageWidth, CanvasId, IncreaseZoomButton, DecreaseZoomButton, ...Styles) {
         this.ImageElement = ImageElement;
         this.CanvasParentElement = CanvasParentElement;
         this.Canvasheight = CanvasImageHeight;
@@ -48,6 +49,7 @@ class Zoom_Controller {
         this.DecreaseZoomButton = DecreaseZoomButton;
         this.CanvasIsActive = false;
         this.Zoom = 1;
+        this.MaxZoom = MaxZoom;
         this.Styles = Styles;
     }
 
@@ -89,7 +91,7 @@ class Zoom_Controller {
      */
 
     ZoomIn() {
-        if (this.Zoom < 10) {
+        if (this.Zoom < this.MaxZoom) {
             this.Zoom = this.Zoom + 1;
             this.Canvasheight += 200;
             this.Canvaswidth += 100;
@@ -199,8 +201,8 @@ class Zoom_Controller {
         //This data is done by the porcent of the movement
 
         let Movement = {
-            X: (e.layerX * 100) / e.target.width,
-            Y: (e.layerY * 100) / e.target.height
+            X: (e.offsetX * 100) / e.target.width,
+            Y: (e.offsetY * 100) / e.target.height
         }
 
         let X_DIVISOR = (this.Canvaswidth - this.CanvasElementWidth);
@@ -277,4 +279,4 @@ class Zoom_Controller {
 
 }
 
-export default Zoom_Controller;
+export default Zoom_Image;
