@@ -49,5 +49,5 @@ __Si necesitas un ejemplo mas detallado__ [Haz click aqui](./Example) o visita p
  ### Archivo de la libreria:
  [zoom_controller.js](./zoom_controller.js)
 
-## _Desadorrado por_
+## _Desarrollado por_
 - @Spenser-HN
