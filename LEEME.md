@@ -26,12 +26,15 @@ const Decrease = document.getElementById("ZoomOut");
 
 
 /**
+ * 20 es igual a un maximo zoom de 200%
  * 400 x 500 son las dimensiones del elemento <canvas> respoectivamente (400 x 500 son lo recomendado pero puedes usar otras dimensiones).
  * 1600 x 1600 son las dimensiones de la imagen dibujada en el <canvas> Both 1600 (Puedes cambiar estas dimensiones si quieres).
  * "Avion" es una clase de css (recuerda mandar todas las clasess en un Array de strings).
 **/
 
-const ZoomView = new Zoom_Image(Image, Div, 400, 500, 1600, 1600, "Canvas", Increase, Decrease, ["Avion"]);
+
+const ZoomView = new Zoom_Image(Image, 20, Div, 300, 600, 1600, 1600, "Canvas", Increase, Decrease, ["Avion"]);
+
 
 //Crea el controlador de Zoom para la imagen
 ZoomView.Init();
