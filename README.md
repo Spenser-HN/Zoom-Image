@@ -3,7 +3,7 @@ Handles Hovers over an image and creates a mini view for it
 
 ### Docs Languages
 - [English](./README.md)
-- [Spanish](./LEEME.md)
+- [Español](./LEEME.md)
 
 ## _Usage_
 Using Zoom-Image it's too simple
