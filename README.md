@@ -10,6 +10,7 @@ Using Zoom-Image it's too simple
 Just follow the next example
 
 ### Example
+
 ```
 import Zoom_Image from "./zoom_controller.js";
 
@@ -26,8 +27,9 @@ const Decrease = document.getElementById("ZoomOut");
 
 /**
  * 400 AND 500 are the dimensions of the canvas element (400 and 500 are recommended but you can use any other dimensions).
- * Both 1600 is the size of the image  drawn in the canvas element
- */
+ * Both 1600 is the size of the image  drawn in the canvas element.
+ * "Avion" is a css className
+**/
 
 const ZoomView = new Zoom_Image(Image, Div, 400, 500, 1600, 1600, "Canvas", Increase, Decrease, ["Avion"]);
 
