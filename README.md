@@ -28,7 +28,7 @@ const Decrease = document.getElementById("ZoomOut");
 /**
  * 400 AND 500 are the dimensions of the canvas element (400 and 500 are recommended but you can use any other dimensions).
  * Both 1600 is the size of the image  drawn in the canvas element.
- * "Avion" is a css className. (Remember to use a css position style like "position: fixed" or "position:relative");
+ * "Avion" is a css className.
 **/
 
 const ZoomView = new Zoom_Image(Image, Div, 400, 500, 1600, 1600, "Canvas", Increase, Decrease, ["Avion"]);
@@ -36,6 +36,9 @@ const ZoomView = new Zoom_Image(Image, Div, 400, 500, 1600, 1600, "Canvas", Incr
 //Creates a zoom View for every hover on the image
 ZoomView.Init();
 ```
+
+*Important*: Remember to use a css position for the <canvas> element, it can be "position:fixed" or "position:relative" to avoid problems with the
+ rendering of the <canvas> component.
 
 ## _Developed by_
 - @Spenser-HN
