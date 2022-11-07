@@ -40,8 +40,11 @@ const ZoomView = new Zoom_Image(Image, 20, Div, 300, 600, 1600, 1600, "Canvas", 
 ZoomView.Init();
 ```
 
-*Importante*: Recuerda usar una posicion de css para el elemento <canvas>, ya puede ser "position:fixed" o "position:relative" para no tener problemas con el
+**Importante**: Recuerda usar una posicion de css para el elemento <canvas>, ya puede ser "position:fixed" o "position:relative" para no tener problemas con el
  renderizado del componente <canvas>.
+ 
+  
+__Si necesitas un ejemplo mas detallado__ [Haz click aqui](./Example) o visita por ti mismo __"./Examples"__ en este repositorio
  
  ### Archivo de la libreria:
  [zoom_controller.js](./zoom_controller.js)
