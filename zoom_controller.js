@@ -14,7 +14,7 @@
    const Increase = document.getElementById("ZoomIn");
    const Decrease = document.getElementById("ZoomOut");
 
-   const ZoomView = new Zoom_Controller(Image, Div, 600, 1200, "Canva", Increase, Decrease);
+   const ZoomView = new Zoom_Controller(Image, Div, 500, 600, 1600, 1600, "Canvas", Increase, Decrease);
 
    //Creates a zoom View for every hover on the image
    ZoomView.Init();
@@ -60,7 +60,7 @@ class Zoom_Controller {
     ChangeImage(Image) {
         this.Remove(false);
         this.ImageElement = Image;
-        this.Zoom = 0;
+        this.Zoom = 1;
         this.CreateCanvasElement()
     }
 
@@ -124,7 +124,7 @@ class Zoom_Controller {
         let Canvas = document.createElement("canvas");
         Canvas.id = this.CanvasId;
 
-        if (this.Styles.length > 0) {
+        if (this.Styles !== null && typeof this.Styles !== "string" && this.Styles.length > 0) {
             this.Styles.forEach((style) => {
                 Canvas.classList.add(style);
             })
